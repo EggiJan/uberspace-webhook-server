@@ -17,7 +17,7 @@ app.use(morgan('combined', {stream: accessLogStream}));
 app.post('/hook/:id', function(req, res) {
   var secret = req.query.secret;
 
-  if(secret !== config.secret) {
+  if(!secret || secret !== config.secret) {
     return res.status(403).send({
       executed: false,
       error: 'Forbidden'
