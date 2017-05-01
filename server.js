@@ -26,14 +26,13 @@ app.post('/hook/:id', function(req, res) {
 
   var id = req.params.id;
   var hook = hooks[id];
+  
   if(!hook) {
     return res.status(404).json({
       executed: false,
       err: 'Hook not found'
     });
   }
-
-  // console.log('### BODY', req.body);
    
   function puts(err, stdout, stderr) {
     if(err) {
@@ -55,6 +54,11 @@ app.post('/hook/:id', function(req, res) {
   exec(hook.script, puts);
 });
 
+app.all('*', function(req, res) {
+  res.status(404).end();
+});
+
 app.listen(config.port, function() {
-  console.log('Server started on port:', config.port);
+  var now = new Date();
+  console.log(now.toISOString(),'--- Server started on port:', config.port);
 });
