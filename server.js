@@ -26,11 +26,11 @@ app.post('/hook/:id', function(req, res) {
 
   var id = req.params.id;
   var hook = hooks[id];
-  
+
   if(!hook) {
     return res.status(404).json({
       executed: false,
-      err: 'Hook not found'
+      error: 'Hook not found'
     });
   }
    
@@ -55,7 +55,10 @@ app.post('/hook/:id', function(req, res) {
 });
 
 app.all('*', function(req, res) {
-  res.status(404).end();
+  res.status(404).json({
+    executed: false,
+    error: 'Not found'
+  })
 });
 
 app.listen(config.port, function() {
