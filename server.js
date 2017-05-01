@@ -15,6 +15,7 @@ var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
 app.use(morgan('combined', {stream: accessLogStream}));
 
 app.post('/hook/:id', function(req, res) {
+  var didRespond = false;
   var secret = req.query.secret;
 
   if(!secret || secret !== config.secret) {
@@ -35,6 +36,11 @@ app.post('/hook/:id', function(req, res) {
   }
    
   function puts(err, stdout, stderr) {
+    // Ignore result
+    if(didRespond) {
+      return;  
+    }
+
     if(err) {
       return res.status(500).json({
         executed: false,
@@ -52,6 +58,15 @@ app.post('/hook/:id', function(req, res) {
   }
 
   exec(hook.script, puts);
+
+  setTimeout(function() {
+    didRespond = true;
+    res.status(200).json({
+      executed: true,
+      error: 'Script did not finish in time'
+    });
+  }, 9000);
+
 });
 
 app.all('*', function(req, res) {
