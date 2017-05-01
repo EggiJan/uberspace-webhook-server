@@ -15,6 +15,15 @@ var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
 app.use(morgan('combined', {stream: accessLogStream}));
 
 app.post('/hook/:id', function(req, res) {
+  var secret = req.query.secret;
+
+  if(secret !== config.secret) {
+    return res.status(403).send({
+      executed: false,
+      error: 'Forbidden'
+    });
+  }
+
   var id = req.params.id;
   var hook = hooks[id];
   if(!hook) {
