@@ -15,24 +15,19 @@ var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
 app.use(morgan('combined', {stream: accessLogStream}));
 
 app.post('/hook/:id', function(req, res) {
+  var timeout = null;
   var didRespond = false;
   var secret = req.query.secret;
-
-  if(!secret || secret !== config.secret) {
-    return res.status(403).send({
-      executed: false,
-      error: 'Forbidden'
-    });
-  }
-
   var id = req.params.id;
   var hook = hooks[id];
 
-  if(!hook) {
-    return res.status(404).json({
+  if(!secret || secret !== config.secret || !hook) {
+    res.status(404).send({
       executed: false,
-      error: 'Hook not found'
+      error: 'Not found'
     });
+    didRespond = true;
+    return;
   }
    
   function puts(err, stdout, stderr) {
@@ -55,18 +50,20 @@ app.post('/hook/:id', function(req, res) {
       stdout: stdout,
       stderr: stderr
     });
+
+    return clearTimeout(timeout);
   }
 
   exec(hook.script, puts);
-
-  setTimeout(function() {
+  
+  // Respond after 9s if script takes to much time
+  timeout = setTimeout(function() {
     didRespond = true;
-    res.status(200).json({
+    return res.status(200).json({
       executed: true,
       error: 'Script did not finish in time'
     });
   }, 9000);
-
 });
 
 app.all('*', function(req, res) {
