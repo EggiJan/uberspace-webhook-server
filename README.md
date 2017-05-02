@@ -36,7 +36,6 @@ Assuming your webhook server runs on ``localhost:1337``
 |Status|Description|Response|
 | :------ | :--------- | :------ |
 |200 OK|Shell command was executed sccessfully| ``{executed: true, stdout: <output_of_shell>, stderr: <err_output_of_shell>}``|
-|403 FORBIDDEN|Sent secret does not match server secret|``{executed: false, error: 'Forbidden'}``|
-|404 NOT FOUND| Hook was not specified in hooks.js|``{executed: false, error: 'Hook not found'}``|
+|404 NOT FOUND| Hook was not specified in hooks.js or secret was wrong|``{executed: false, error: 'Not found'}``|
 |404 NOT FOUND| Request URL did not match any request handlers|``{executed: false, error: 'Not found'}``|
 |500 INTERNAL SERVER ERROR| Script execution failed|``{executed: false, error: <err_from_child_process>, stdout: <output_of_shell>, stderr: <err_from_script>}``|
