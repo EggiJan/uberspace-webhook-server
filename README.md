@@ -3,10 +3,11 @@ Trigger shell commands via HTTP requests. Not limited to use at uberspace.
 
 ## Setup
 
-1. Rename ``example-config.js`` to ``config.js``
-2. Rename ``example-hooks.js`` to ``hooks.js``
-3. Adapt config to your needs
-4. Start server ``npm start``
+1. Install dependencies ``npm install``
+2. Rename ``example-config.js`` to ``config.js``
+3. Rename ``example-hooks.js`` to ``hooks.js``
+4. Adapt config to your needs
+5. Start server ``npm start``
 
 ### Create hooks
 Create hooks by adding them to the ``hooks.js``
