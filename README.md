@@ -40,3 +40,6 @@ Assuming your webhook server runs on ``localhost:1337``
 |404 NOT FOUND| Hook was not specified in hooks.js or secret was wrong|``{executed: false, error: 'Not found'}``|
 |404 NOT FOUND| Request URL did not match any request handlers|``{executed: false, error: 'Not found'}``|
 |500 INTERNAL SERVER ERROR| Script execution failed|``{executed: false, error: <err_from_child_process>, stdout: <output_of_shell>, stderr: <err_from_script>}``|
+
+### Running on Uberspace
+* See [Uberspace](https://uberspace.de) specific instructions on how to run this server as a service [here](https://manual.uberspace.de/daemons-supervisord/#create-a-service).
