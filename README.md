@@ -17,7 +17,7 @@ Create hooks by adding them to the ``hooks.js``
   script: './updateMyApp.sh'
 }
 ```
-The script is executed on ``POST /hooks/myhook``
+The script is executed on ``POST /hook/myhook``
 
 
 ### Config - Options
@@ -30,7 +30,7 @@ The script is executed on ``POST /hooks/myhook``
 ### Trigger webhook
 Assuming your webhook server runs on ``localhost:1337``
 
-``POST http://localhost:1337/hooks/myhook?secret=shhhhh``
+``POST http://localhost:1337/hook/myhook?secret=shhhhh``
 
 ### Responses
 
