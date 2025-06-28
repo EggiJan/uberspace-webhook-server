@@ -66,7 +66,7 @@ app.post('/hook/:id', function(req, res) {
   }, 9000);
 });
 
-app.all('*', function(req, res) {
+app.all('/{*all}', function(req, res) {
   res.status(404).json({
     executed: false,
     error: 'Not found'

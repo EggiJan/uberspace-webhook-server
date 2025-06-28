@@ -9,7 +9,7 @@
   "author": "Jan Mueller",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.15.2",
-    "morgan": "^1.8.1"
+    "express": "^5.1.0",
+    "morgan": "^1.10.0"
   }
 }
